@@ -1,0 +1,19 @@
+FROM debian:latest
+
+RUN apt update && apt install -y \
+    iproute2 \
+    iputils-ping \
+    net-tools \
+    tcpdump \
+    vim \
+    systemctl \
+    dsniff \
+    ebtables \
+    arpwatch \
+    libpcap-dev \
+    rsyslog
+
+COPY arpwatch /etc/default/arpwatch
+COPY ebtables.sh /root/ebtables.sh
+
+CMD ["/bin/bash"]

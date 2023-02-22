@@ -1,0 +1,62 @@
+version: "3.7"
+services:
+  client1:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: arp_client1
+    hostname: client1
+    stdin_open: true
+    tty: true
+    networks:
+      arp_spoof:
+        ipv4_address: 192.168.1.1
+    cap_add:
+      - NET_ADMIN
+  client2:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: arp_client2
+    hostname: client2
+    stdin_open: true
+    tty: true
+    networks:
+      arp_spoof:
+        ipv4_address: 192.168.1.2
+    cap_add:
+      - NET_ADMIN
+  frontal:
+    build: 
+      context: .
+      dockerfile: Dockerfile.frontal
+    container_name: arp_frontal
+    hostname: frontal
+    stdin_open: true
+    tty: true
+    networks:
+      arp_spoof:
+        ipv4_address: 192.168.1.253
+    cap_add:
+      - NET_ADMIN
+  attacker:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: arp_attacker
+    hostname: attacker
+    stdin_open: true
+    tty: true
+    networks:
+      arp_spoof:
+        ipv4_address: 192.168.1.3
+    cap_add:
+      - NET_ADMIN
+
+networks:
+  arp_spoof:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 192.168.1.0/24
+         gateway: 192.168.1.254

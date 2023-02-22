@@ -1,0 +1,3 @@
+INTERFACES="eth0"
+ARGS="-N -p"
+IFACE_ARGS=""
